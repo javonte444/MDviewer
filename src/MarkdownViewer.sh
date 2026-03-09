@@ -62,7 +62,7 @@ render_preview() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri file:; img-src data: file: http: https:; media-src data: file: http: https:; style-src 'self'; script-src 'self'; connect-src 'none'; font-src data: file:; object-src 'none'; frame-src 'none'; form-action 'none';">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
 <title>Markdown Viewer</title>
 <link rel="stylesheet" href="viewer.css">
 </head>
