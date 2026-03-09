@@ -5,10 +5,17 @@
 
 static NSString *const MDVErrorDomain = @"com.local.markdown-viewer";
 
+static NSSet<NSString *> *MDVMarkdownExtensions(void) {
+    static NSSet<NSString *> *extensions;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        extensions = [NSSet setWithObjects:@"md", @"markdown", @"mdown", @"mkd", nil];
+    });
+    return extensions;
+}
+
 static BOOL MDVURLLooksLikeMarkdown(NSURL *url) {
-    NSString *extension = url.pathExtension.lowercaseString;
-    NSSet<NSString *> *extensions = [NSSet setWithObjects:@"md", @"markdown", @"mdown", @"mkd", nil];
-    return [extensions containsObject:extension];
+    return [MDVMarkdownExtensions() containsObject:url.pathExtension.lowercaseString];
 }
 
 static NSError *MDVMakeError(NSInteger code, NSString *description) {
@@ -168,6 +175,8 @@ static NSError *MDVMakeError(NSInteger code, NSString *description) {
         return NO;
     }
 
+    BOOL fileChanged = ![standardURL isEqual:self.sourceFileURL];
+
     self.sourceFileURL = standardURL;
     self.previewFileURL = previewURL;
     self.previewReady = NO;
@@ -178,7 +187,10 @@ static NSError *MDVMakeError(NSInteger code, NSString *description) {
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:standardURL];
 
     [self.webView loadFileURL:previewURL allowingReadAccessToURL:[NSURL fileURLWithPath:@"/"]];
-    [self startWatchingSourceFile];
+
+    if (fileChanged || !self.fileWatchStream) {
+        [self startWatchingSourceFile];
+    }
 
     return YES;
 }

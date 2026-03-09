@@ -14,7 +14,7 @@ MACOS_DIR="$CONTENTS_DIR/MacOS"
 RESOURCES_DIR="$CONTENTS_DIR/Resources"
 LICENSES_DIR="$RESOURCES_DIR/licenses"
 VENDOR_DIR="$RESOURCES_DIR/vendor"
-ICON_SOURCE="$SCRIPT_DIR/mdviewer.svg"
+ICON_SOURCE="$SCRIPT_DIR/assets/mdviewer.svg"
 ICON_NAME="AppIcon"
 ICON_PATH="$RESOURCES_DIR/$ICON_NAME.icns"
 
@@ -67,6 +67,8 @@ extract_npm_file() {
     rm -rf "$temp_dir"
 }
 
+SDK_PATH=""
+
 prepare_environment() {
     require_command bash
     require_command clang
@@ -78,19 +80,17 @@ prepare_environment() {
     require_command shasum
     require_command tar
 
+    SDK_PATH="$(xcrun --show-sdk-path)"
     mkdir -p "$DIST_DIR"
 }
 
 build_native_binary() {
-    local sdk_path
-
-    sdk_path="$(xcrun --show-sdk-path)"
     clang \
         -fobjc-arc \
         -Wall \
         -Wextra \
         -Wno-unused-parameter \
-        -isysroot "$sdk_path" \
+        -isysroot "$SDK_PATH" \
         -framework Cocoa \
         -framework CoreServices \
         -framework UniformTypeIdentifiers \
@@ -103,11 +103,9 @@ rasterize_svg() {
     local svg_path="$1"
     local png_path="$2"
     local size="${3:-1024}"
-    local sdk_path
     local helper_src
     local helper_bin
 
-    sdk_path="$(xcrun --show-sdk-path)"
     helper_src="$(mktemp "${TMPDIR:-/tmp}/svg2png-XXXXXX.m")"
     helper_bin="${helper_src%.m}"
 
@@ -137,7 +135,7 @@ int main(int argc, const char *argv[]) {
 }
 OBJC
 
-    clang -fobjc-arc -isysroot "$sdk_path" -framework AppKit \
+    clang -fobjc-arc -isysroot "$SDK_PATH" -framework AppKit \
         "$helper_src" -o "$helper_bin"
     "$helper_bin" "$svg_path" "$png_path" "$size"
     rm -f "$helper_src" "$helper_bin"

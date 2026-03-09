@@ -16,12 +16,9 @@ require_resource() {
 }
 
 to_file_url() {
-    /usr/bin/python3 - "$1" <<'PY'
-from pathlib import Path
-import sys
-
-print(Path(sys.argv[1]).resolve().as_uri())
-PY
+    local resolved
+    resolved="$(cd "$1" && pwd)"
+    printf 'file://%s' "$resolved"
 }
 
 encode_file_base64() {
@@ -89,7 +86,12 @@ HTML
 
 cleanup_old_previews() {
     mkdir -p "$PREVIEW_ROOT"
-    find "$PREVIEW_ROOT" -mindepth 1 -mtime +7 -delete 2>/dev/null || true
+    local marker="$PREVIEW_ROOT/.last_cleanup"
+    if [ -f "$marker" ] && [ "$(find "$marker" -mtime -1 2>/dev/null)" ]; then
+        return
+    fi
+    find "$PREVIEW_ROOT" -mindepth 1 -not -name '.last_cleanup' -mtime +7 -delete 2>/dev/null || true
+    touch "$marker"
 }
 
 main() {
