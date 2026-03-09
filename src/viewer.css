@@ -1,0 +1,203 @@
+:root {
+  --page-text: #122033;
+  --muted-text: #5b6675;
+  --accent: #1d4ed8;
+  --border: #d6dde7;
+  --inline-code-bg: #eef2f7;
+  --inline-code-text: #bf1457;
+  --code-block-bg: #162032;
+  --code-block-text: #d8e2f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  color: var(--page-text);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+}
+
+.document {
+  width: 100%;
+  min-height: 100vh;
+  padding: 48px 56px 64px;
+  line-height: 1.72;
+  font-size: 12pt;
+}
+
+.document__status,
+.document__error {
+  margin: 0;
+  font: 500 16px/1.6 "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+.document__status {
+  color: var(--muted-text);
+}
+
+.document__error {
+  color: #9f1239;
+}
+
+.document h1,
+.document h2,
+.document h3,
+.document h4,
+.document h5,
+.document h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+  color: #0f172a;
+  font-family: "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+.document h1 {
+  margin-top: 0;
+  padding-bottom: 0.28em;
+  border-bottom: 2px solid #edf2f7;
+  font-size: 2.15em;
+}
+
+.document h2 {
+  padding-bottom: 0.24em;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 1.65em;
+}
+
+.document h3 {
+  font-size: 1.32em;
+}
+
+.document p,
+.document ul,
+.document ol,
+.document blockquote,
+.document table,
+.document pre,
+.document hr {
+  margin-top: 0;
+  margin-bottom: 1.1em;
+}
+
+.document ul,
+.document ol {
+  padding-left: 1.4em;
+}
+
+.document li + li {
+  margin-top: 0.28em;
+}
+
+.document li > ul,
+.document li > ol {
+  margin-top: 0.35em;
+  margin-bottom: 0;
+}
+
+.document a {
+  color: var(--accent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+}
+
+.document code,
+.document pre,
+.document kbd {
+  font-family: "SF Mono", "Fira Code", "Menlo", monospace;
+}
+
+.document code {
+  padding: 0.12em 0.38em;
+  border-radius: 6px;
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
+  font-size: 0.87em;
+}
+
+.document pre {
+  overflow-x: auto;
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: var(--code-block-bg);
+  color: var(--code-block-text);
+}
+
+.document pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.85em;
+}
+
+.document blockquote {
+  padding: 14px 18px;
+  border-left: 4px solid var(--accent);
+  background: #f5f8fc;
+  color: #445066;
+}
+
+.document blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.document table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.document th,
+.document td {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.document th {
+  background: #f6f9fc;
+  font: 600 0.92em/1.4 "SF Pro Text", "Segoe UI", sans-serif;
+  color: #223249;
+}
+
+.document tr:nth-child(even) td {
+  background: #fbfcfe;
+}
+
+.document hr {
+  border: 0;
+  border-top: 1px solid #e6edf5;
+}
+
+.document img {
+  max-width: 100%;
+  height: auto;
+}
+
+.document input[type="checkbox"] {
+  margin-right: 8px;
+  transform: translateY(1px);
+}
+
+@media (max-width: 860px) {
+  .document {
+    padding: 28px 20px 40px;
+    font-size: 12pt;
+  }
+}
+
+@media print {
+  .document {
+    min-height: auto;
+    padding: 0;
+  }
+}
