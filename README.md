@@ -5,7 +5,8 @@
 <h1 align="center">MDviewer</h1>
 
 <p align="center">
-  A lightweight macOS app that opens Markdown files as clean, print-ready documents.
+  Markdown previews are usually cluttered, browser-based, or tied to editors.<br>
+  MDviewer is a tiny native macOS app that opens any Markdown file as a clean, print-ready document.
 </p>
 
 <p align="center">
@@ -22,6 +23,16 @@
   <img src="./assets/demo.gif" alt="MDviewer demo" width="720">
 </p>
 
+## Why MDviewer?
+
+Most Markdown previews are inside editors or browsers.
+
+MDviewer is different:
+- Double-click a Markdown file and read it immediately
+- Clean typography optimized for printing
+- No Electron, no runtime dependencies
+- Fully local and secure
+
 ## Features
 
 - **Native macOS** — Cocoa + WKWebView, launches instantly, under 1 MB
@@ -29,6 +40,7 @@
 - **PDF export** — `Cmd+Shift+E` to save, `Cmd+P` to print
 - **Live reload** — re-renders automatically when the file changes on disk
 - **GitHub Flavored Markdown** — tables, task lists, fenced code blocks
+- **Dark mode** — follows your macOS appearance setting
 - **Secure** — HTML sanitized with [DOMPurify](https://github.com/cure53/DOMPurify), strict Content Security Policy
 - **Finder integration** — registers as default `.md` handler; double-click to open
 - **Tabbed windows** — multiple documents in one window
@@ -38,7 +50,7 @@
 
 ### Download
 
-1. Grab `Markdown.Viewer.app.zip` from [Releases](https://github.com/JackYoung27/mdviewer/releases/latest)
+1. Grab `MDviewer.app.zip` from [Releases](https://github.com/JackYoung27/mdviewer/releases/latest)
 2. Unzip, drag to `/Applications`
 3. First launch: right-click → **Open** (required once for unsigned apps)
 

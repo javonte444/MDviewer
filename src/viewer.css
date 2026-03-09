@@ -14,7 +14,63 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-text: #d8e2f0;
+    --muted-text: #9aa5b4;
+    --accent: #60a5fa;
+    --border: #2e3a4a;
+    --inline-code-bg: #1e293b;
+    --inline-code-text: #f0abfc;
+    --code-block-bg: #0f1724;
+    --code-block-text: #d8e2f0;
+  }
+
+  body {
+    background: #111827;
+  }
+
+  .document h1,
+  .document h2,
+  .document h3,
+  .document h4,
+  .document h5,
+  .document h6 {
+    color: #e2e8f0;
+  }
+
+  .document h1 {
+    border-bottom-color: #1e293b;
+  }
+
+  .document h2 {
+    border-bottom-color: #1e293b;
+  }
+
+  .document blockquote {
+    background: #1a2332;
+    color: #b0bec5;
+  }
+
+  .document th {
+    background: #1a2332;
+    color: #d8e2f0;
+  }
+
+  .document tr:nth-child(even) td {
+    background: #151f2e;
+  }
+
+  .document hr {
+    border-top-color: #1e293b;
+  }
+
+  .document__error {
+    color: #fb7185;
+  }
 }
 
 body {
