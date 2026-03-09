@@ -4,6 +4,8 @@
 #import <WebKit/WebKit.h>
 
 static NSString *const MDVErrorDomain = @"com.local.markdown-viewer";
+static NSString *const MDVReleasesURL = @"https://api.github.com/repos/JackYoung27/MDviewer/releases/latest";
+static NSString *const MDVDownloadURL = @"https://github.com/JackYoung27/MDviewer/releases/latest";
 
 static NSSet<NSString *> *MDVMarkdownExtensions(void) {
     static NSSet<NSString *> *extensions;
@@ -544,6 +546,40 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     if (!self.openedFileDuringLaunch) {
         [self openDocument:nil];
     }
+    [self checkForUpdates];
+}
+
+- (void)checkForUpdates {
+    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] ?: @"0.0.0";
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MDVReleasesURL]];
+    [request setValue:@"application/vnd.github+json" forHTTPHeaderField:@"Accept"];
+    request.timeoutInterval = 10;
+
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error || !data) return;
+
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode != 200) return;
+
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSString *tagName = json[@"tag_name"];
+        if (![tagName isKindOfClass:NSString.class]) return;
+
+        NSString *latestVersion = [tagName hasPrefix:@"v"] ? [tagName substringFromIndex:1] : tagName;
+        if ([latestVersion compare:currentVersion options:NSNumericSearch] != NSOrderedDescending) return;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = [NSString stringWithFormat:@"MDviewer %@ is available", latestVersion];
+            alert.informativeText = [NSString stringWithFormat:@"You're running version %@. Would you like to download the update?", currentVersion];
+            [alert addButtonWithTitle:@"Download"];
+            [alert addButtonWithTitle:@"Later"];
+            if ([alert runModal] == NSAlertFirstButtonReturn) {
+                [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:MDVDownloadURL]];
+            }
+        });
+    }] resume];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
