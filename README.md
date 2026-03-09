@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./mdviewer.svg" alt="MDviewer logo" width="128">
+  <img src="./assets/mdviewer.svg" alt="MDviewer logo" width="128">
 </p>
 
 <h1 align="center">MDviewer</h1>
