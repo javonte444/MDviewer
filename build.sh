@@ -3,6 +3,7 @@
 set -euo pipefail
 
 APP_NAME="Markdown Viewer"
+ARCHIVE_NAME="Markdown-Viewer-macOS.zip"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC_DIR="$SCRIPT_DIR/src"
 BUILD_DIR="$SCRIPT_DIR/.build"
@@ -14,6 +15,7 @@ MACOS_DIR="$CONTENTS_DIR/MacOS"
 RESOURCES_DIR="$CONTENTS_DIR/Resources"
 LICENSES_DIR="$RESOURCES_DIR/licenses"
 VENDOR_DIR="$RESOURCES_DIR/vendor"
+ARCHIVE_PATH="$DIST_DIR/$ARCHIVE_NAME"
 ICON_SOURCE="$SCRIPT_DIR/assets/mdviewer.svg"
 ICON_NAME="AppIcon"
 ICON_PATH="$RESOURCES_DIR/$ICON_NAME.icns"
@@ -25,6 +27,16 @@ MARKED_SHA256="7e70d262692cda5ef9556bbe304a9fc2b3b9ca48e114688e5601eac6baac584a"
 DOMPURIFY_VERSION="3.3.2"
 DOMPURIFY_FILE="package/dist/purify.min.js"
 DOMPURIFY_SHA256="d448d28fdc0e16a906823f0f4db4688288c159bf6b82dc37a48949db4231d380"
+
+usage() {
+    cat <<'EOF'
+Usage:
+  ./build.sh           Build the app bundle into dist/
+  ./build.sh build     Same as default
+  ./build.sh archive   Build the app bundle and create a release zip
+  ./build.sh clean     Remove dist/ build outputs
+EOF
+}
 
 require_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -73,6 +85,7 @@ prepare_environment() {
     require_command bash
     require_command clang
     require_command curl
+    require_command ditto
     require_command iconutil
     require_command plutil
     require_command sips
@@ -185,7 +198,7 @@ build_bundle() {
 
     prepare_environment
 
-    rm -rf "$APP_DIR"
+    rm -rf "$APP_DIR" "$ARCHIVE_PATH"
     mkdir -p "$MACOS_DIR" "$RESOURCES_DIR" "$VENDOR_DIR" "$LICENSES_DIR"
 
     build_native_binary
@@ -216,13 +229,38 @@ build_bundle() {
     echo "Done! Built -> $APP_DIR"
 }
 
+archive_bundle() {
+    build_bundle
+    ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "$ARCHIVE_PATH"
+    echo "Archive -> $ARCHIVE_PATH"
+}
+
 clean_outputs() {
     rm -rf "$DIST_DIR"
     echo "Removed $DIST_DIR"
 }
 
-if [ "${1:-}" = "clean" ]; then
-    clean_outputs
-else
-    build_bundle
-fi
+main() {
+    local command="${1:-build}"
+
+    case "$command" in
+        build)
+            build_bundle
+            ;;
+        archive)
+            archive_bundle
+            ;;
+        clean)
+            clean_outputs
+            ;;
+        -h|--help|help)
+            usage
+            ;;
+        *)
+            usage >&2
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
